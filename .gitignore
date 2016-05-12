@@ -35,3 +35,15 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+Markov-Tweet
+scrappedFlavor.py
+tweetboot.py
+referenceBots
+access.json
+queue.json
+list.txt
+*.pyc
+*.json
+flavortown2.py
+flavortext.txt
+flavortown.txt2

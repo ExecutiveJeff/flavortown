@@ -14,19 +14,19 @@ import twitter
 script = argv
 inputfile = argv
 TIMEOUT = datetime.timedelta(minutes=60).seconds
-twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET))
+#twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 
 def main():
     # might break everything splice in autoblake markov chain code
-    order = int(1)
+    order = int(2)
     handle = "DoMeAFlavorTown"
     filetext = process_file()
     markov = MarkovDict(filetext, order, 180)
     markov.read_text()
     output = markov.output_text()
     print output
-    tweet(output)
+
 
 
 def process_file():
@@ -45,6 +45,7 @@ def tweet(sentence):
         pass
 
 if __name__ == '__main__':
-    l = task.LoopingCall(main)
-    l.start(TIMEOUT) 
-    reactor.run()
+#    l = task.LoopingCall(main)
+#    l.start(TIMEOUT) 
+#    reactor.run()
+     main()

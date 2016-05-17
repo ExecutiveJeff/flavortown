@@ -1,7 +1,25 @@
 import pickle
 import random
 import string
+import datetime
+from twisted.internet import task
+from twisted.internet import reactor
+from twython import Twython
+import twitter
+import sys
+import json
 
+TIMEOUT = datetime.timedelta(minutes=60).seconds
+
+twitter = Twython("n6ljSickvPnRyV4rhQnvUYDpZ",
+                   "fOTyGq19WDhRtksbUguFuOsFKItFJyp3snSlhOv7dnkeg2ZDUe",
+                   "714220672268894209-bVWFvFlkR77ZSwvT3nteQOkD82M7eRf",
+                   "fQpeoPzDDwxOSZktVR6BKutyEYFm7YKGEAg4yOb5WfHH3")
+
+def auth():
+    with open("access.json", 'r') as f:
+        db = json.load(f)
+    return Twython(db["API_Key"], db["API_Secret"], db["Access_Token"], db["Access_Token_Secret"])
 
 def main():
     output = buildPost()
@@ -9,8 +27,7 @@ def main():
     while len(output) > 140:
         output = buildPost()
         output += str(' #' + hashtag(output))
-    print len(output)
-    print output
+    tweet(output)
 
 
 def buildTweet():
@@ -28,6 +45,7 @@ def buildTweet():
     return tweet
 
 def buildPost():
+    # type: () -> object
     output = ''
     while len(output) < 120:
         output += (' ' + buildTweet())
@@ -45,5 +63,14 @@ def hashtag(output):
     print hashtag
     return hashtag
 
+def tweet(sentance):
+    try:
+        sys.stdout.write("{} {}\n".format(len(sentance), sentance))
+        twitter.update_status(status=sentance)
+    except:
+        pass
+
 if __name__ == '__main__':
-    main()
+    l = task.LoopingCall(main)
+    l.start(TIMEOUT)
+    reactor.run()

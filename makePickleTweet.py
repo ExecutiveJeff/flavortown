@@ -56,7 +56,7 @@ def buildPost():
     while len(output) < 120:
         output += (' ' + buildTweet())
         output = output.rpartition('.')[0]
-        endingpunc = [".", "!", "?", "?!"]
+        endingpunc = [".", ".", ".", ".", ".", "!", "?", "?!"]
         output += random.choice(endingpunc)
         output = output.lstrip('\"')
         output = output.lstrip(string.punctuation)

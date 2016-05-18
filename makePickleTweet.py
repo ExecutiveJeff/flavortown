@@ -5,7 +5,6 @@ import datetime
 from twisted.internet import task
 from twisted.internet import reactor
 from twython import Twython
-import twitter
 import sys
 import json
 
@@ -16,12 +15,19 @@ twitter = Twython("n6ljSickvPnRyV4rhQnvUYDpZ",
                    "714220672268894209-bVWFvFlkR77ZSwvT3nteQOkD82M7eRf",
                    "fQpeoPzDDwxOSZktVR6BKutyEYFm7YKGEAg4yOb5WfHH3")
 
-def auth():
-    with open("access.json", 'r') as f:
-        db = json.load(f)
-    return Twython(db["API_Key"], db["API_Secret"], db["Access_Token"], db["Access_Token_Secret"])
+#def auth():
+#    f =  open("access.json", 'r')
+#    db = json.load(f)
+#    API_Key = db["API_Key"]
+#    API_Secret = db["API_Secret"]
+#    Access_Token = db["Access_Token"]
+#    Access_Token_Secret = db["Access_Token_Secret"]
+#    return Twython(API_Key, API_Secret, Access_Token, Access_Token_Secret)
+
 
 def main():
+
+    print twitter
     output = buildPost()
     output += str(' #' + hashtag(output))
     while len(output) > 140:
@@ -50,12 +56,13 @@ def buildPost():
     while len(output) < 120:
         output += (' ' + buildTweet())
         output = output.rpartition('.')[0]
-        endingpunc = [".", "!", "?"]
+        endingpunc = [".", "!", "?", "?!"]
         output += random.choice(endingpunc)
         output = output.lstrip('\"')
         output = output.lstrip(string.punctuation)
         print output
     return output
+
 
 def hashtag(output):
     keywords = ["flavortown", "badabing", "brother", "wow", "bbq", "rollingout", "guyfieri", "tripleD", "gangsta", "cheflife", "outofthisworld", "saucy", "shutthefrontdoor"]
@@ -63,10 +70,11 @@ def hashtag(output):
     print hashtag
     return hashtag
 
-def tweet(sentance):
+
+def tweet(sentence):
     try:
-        sys.stdout.write("{} {}\n".format(len(sentance), sentance))
-        twitter.update_status(status=sentance)
+        sys.stdout.write("{} {}\n".format(len(sentence), sentence))
+        twitter.update_status(status=sentence)
     except:
         pass
 

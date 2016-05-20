@@ -10,19 +10,14 @@ import json
 
 TIMEOUT = datetime.timedelta(minutes=60).seconds
 
-twitter = Twython("n6ljSickvPnRyV4rhQnvUYDpZ",
-                   "fOTyGq19WDhRtksbUguFuOsFKItFJyp3snSlhOv7dnkeg2ZDUe",
-                   "714220672268894209-bVWFvFlkR77ZSwvT3nteQOkD82M7eRf",
-                   "fQpeoPzDDwxOSZktVR6BKutyEYFm7YKGEAg4yOb5WfHH3")
-
-#def auth():
-#    f =  open("access.json", 'r')
-#    db = json.load(f)
-#    API_Key = db["API_Key"]
-#    API_Secret = db["API_Secret"]
-#    Access_Token = db["Access_Token"]
-#    Access_Token_Secret = db["Access_Token_Secret"]
-#    return Twython(API_Key, API_Secret, Access_Token, Access_Token_Secret)
+def auth():
+    f =  open("access.json", 'r')
+    db = json.load(f)
+    API_Key = db["API_Key"]
+    API_Secret = db["API_Secret"]
+    Access_Token = db["Access_Token"]
+    Access_Token_Secret = db["Access_Token_Secret"]
+    return Twython(API_Key, API_Secret, Access_Token, Access_Token_Secret)
 
 
 def main():

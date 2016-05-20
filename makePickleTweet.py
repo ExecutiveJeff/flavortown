@@ -65,7 +65,7 @@ def buildPost():
 
 
 def hashtag(output):
-    keywords = ["flavortown", "badabing", "brother", "wow", "bbq", "rollingout", "guyfieri", "tripleD", "gangsta", "cheflife", "outofthisworld", "saucy", "shutthefrontdoor"]
+    keywords = ["420braiseit", "flavortown", "badabing", "brother", "wow", "bbq", "rollingout", "guyfieri", "tripleD", "gangsta", "cheflife", "outofthisworld", "saucy", "shutthefrontdoor"]
     hashtag = str(random.choice(keywords))
     print hashtag
     return hashtag

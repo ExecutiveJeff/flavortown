@@ -22,6 +22,7 @@ def main():
      print len(output)
      print output
 
+
 def get_api(cfg):
      graph = facebook.GraphAPI(cfg['access_token'])
      resp = graph.get_object('me/accounts')
@@ -48,7 +49,7 @@ def buildTweet():
 
 def buildPost():
     output = ''
-    while len(output) < 700:
+    while len(output) < 7000:
         output += (' ' + buildTweet())
         print output
     return output
@@ -61,6 +62,7 @@ def tweet(sentence):
         pass
 
 if __name__ == '__main__':
-    l = task.LoopingCall(main)
-    l.start(TIMEOUT)
-    reactor.run()
+#    l = task.LoopingCall(main)
+#    l.start(TIMEOUT)
+#    reactor.run()
+    main()

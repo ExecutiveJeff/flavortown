@@ -5,24 +5,23 @@ import datetime
 from twisted.internet import task
 from twisted.internet import reactor
 from twython import Twython
-import sys
 import json
 
 TIMEOUT = datetime.timedelta(minutes=60).seconds
 
 def auth():
-    f =  open("access.json", 'r')
-    db = json.load(f)
-    API_Key = db["API_Key"]
-    API_Secret = db["API_Secret"]
-    Access_Token = db["Access_Token"]
-    Access_Token_Secret = db["Access_Token_Secret"]
-    return Twython(API_Key, API_Secret, Access_Token, Access_Token_Secret)
+    with open("access.json", 'r') as f:
+        db = json.load(f)
+    print db["API_Key"]
+    print db["API_Secret"]
+    print db["Access_Token"]
+    print db["Access_Token_Secret"]
+    return Twython(db["API_Key"], db["API_Secret"], db["Access_Token"], db["Access_Token_Secret"])
 
 
 def main():
-
-    print twitter
+    auth()
+    twitter = auth()
     output = buildPost()
     output += str(' #' + hashtag(output))
     while len(output) > 140:
@@ -46,7 +45,6 @@ def buildTweet():
     return tweet
 
 def buildPost():
-    # type: () -> object
     output = ''
     while len(output) < 120:
         output += (' ' + buildTweet())

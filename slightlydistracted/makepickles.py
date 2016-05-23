@@ -50,7 +50,7 @@ def buildTweet():
 
 def buildPost():
     output = ''
-    while len(output) < 700:
+    while len(output) < 350:
         output += (' ' + buildTweet())
         print output
     return output

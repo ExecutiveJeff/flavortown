@@ -12,15 +12,16 @@ TIMEOUT = datetime.timedelta(minutes=60).seconds
 def auth():
     with open("access.json", 'r') as f:
         db = json.load(f)
-    print db["API_Key"]
-    print db["API_Secret"]
-    print db["Access_Token"]
-    print db["Access_Token_Secret"]
-    return Twython(db["API_Key"], db["API_Secret"], db["Access_Token"], db["Access_Token_Secret"])
-
+    akey = db["API_Key"]
+    asec = db["API_Secret"]
+    atok = db["Access_Token"]
+    atoks = db["Access_Token_Secret"]
+    print akey, asec, atok, atoks
+    twitter = Twython(akey, asec, atok, atoks)
+    return twitter
 
 def main():
-    auth()
+    print auth()
     twitter = auth()
     output = buildPost()
     output += str(' #' + hashtag(output))
@@ -72,6 +73,7 @@ def tweet(sentence):
         pass
 
 if __name__ == '__main__':
-    l = task.LoopingCall(main)
-    l.start(TIMEOUT)
-    reactor.run()
+#    l = task.LoopingCall(main)
+#    l.start(TIMEOUT)
+#    reactor.run()
+    main()

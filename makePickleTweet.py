@@ -56,7 +56,6 @@ def buildTweet():
         if sword2 == "END":
             break
         new_tweet.append(sword2)
-        print new_tweet
     tweet = ' '.join(new_tweet)
     return tweet
 
@@ -69,7 +68,7 @@ def buildPost():
         output += random.choice(endingpunc)
         output = output.lstrip('\"')
         output = output.lstrip(string.punctuation)
-        print output
+        print output, len(output)
     return output
 
 
@@ -81,12 +80,12 @@ def hashtag(output):
 
 
 def tweet(sentence):
-    #try:
-    twitter = auth()
-    sys.stdout.write("{} {}\n".format(len(sentence), sentence))
-    twitter.update_status(status=sentence)
-    #except:
-    #    pass
+    try:
+        twitter = auth()
+        sys.stdout.write("{} {}\n".format(len(sentence), sentence))
+        twitter.update_status(status=sentence)
+    except:
+        pass
 
 if __name__ == '__main__':
     l = task.LoopingCall(main)

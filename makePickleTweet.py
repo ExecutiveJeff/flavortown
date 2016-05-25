@@ -18,9 +18,6 @@ def auth():
     return twitter
 
 def main():
-    print auth()
-    twitter = auth()
-    print twitter
     output = buildPost()
     output += str(' #' + hashtag(output))
     while len(output) > 140:
@@ -72,7 +69,6 @@ def tweet(sentence):
     #    pass
 
 if __name__ == '__main__':
-#    l = task.LoopingCall(main)
-#    l.start(TIMEOUT)
-#    reactor.run()
-    main()
+    l = task.LoopingCall(main)
+    l.start(TIMEOUT)
+    reactor.run()

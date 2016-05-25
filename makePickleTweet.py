@@ -7,9 +7,27 @@ from twisted.internet import task
 from twisted.internet import reactor
 from twython import Twython
 import json
-
+import time
 
 TIMEOUT = datetime.timedelta(minutes=60).seconds
+
+
+def countdown():
+    x = TIMEOUT
+    for i in range(x + 1):
+        time.sleep(1)
+        print "   " + (formatTime(x)),"time left      \r",
+        sys.stdout.flush()
+        x -= 1
+
+
+def formatTime(x):
+    minutes = int(x / 60)
+    seconds_rem = int(x % 60)
+    if (seconds_rem < 10):
+        return(str(minutes) + ":0" + str(seconds_rem))
+    else:
+        return(str(minutes) + ":" + str(seconds_rem))
 
 def auth():
     with open("access.json", 'r') as f:
@@ -24,6 +42,8 @@ def main():
         output = buildPost()
         output += str(' #' + hashtag(output))
     tweet(output)
+    countdown()
+
 
 
 def buildTweet():
@@ -72,3 +92,4 @@ if __name__ == '__main__':
     l = task.LoopingCall(main)
     l.start(TIMEOUT)
     reactor.run()
+

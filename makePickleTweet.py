@@ -2,29 +2,25 @@ import pickle
 import random
 import string
 import datetime
+import sys
 from twisted.internet import task
 from twisted.internet import reactor
 from twython import Twython
-#import json
-from access import twitter
+import json
 
 
 TIMEOUT = datetime.timedelta(minutes=60).seconds
 
-#def auth():
-   # with open("access.json", 'r') as f:
-   #     db = json.load(f)
-   # akey = db["API_Key"]
-   # asec = db["API_Secret"]
-   # atok = db["Access_Token"]
-   # atoks = db["Access_Token_Secret"]
-   # print akey, asec, atok, atoks
- #   twitter = Twython(API_Key, API_Secret, Access_Token, Access_Token_Secret)
- #   return twitter
+def auth():
+    with open("access.json", 'r') as f:
+        db = json.load(f)
+    twitter = Twython(db["API_Key"], db["API_Secret"], db["Access_Token"], db["Access_Token_Secret"])
+    return twitter
 
 def main():
-#    print auth()
-#    twitter = auth()
+    print auth()
+    twitter = auth()
+    print twitter
     output = buildPost()
     output += str(' #' + hashtag(output))
     while len(output) > 140:
@@ -63,16 +59,17 @@ def buildPost():
 def hashtag(output):
     keywords = ["420braiseit", "flavortown", "badabing", "brother", "wow", "bbq", "rollingout", "guyfieri", "tripleD", "gangsta", "cheflife", "outofthisworld", "saucy", "shutthefrontdoor"]
     hashtag = str(random.choice(keywords))
-    print hashtag
+    print "#" + hashtag
     return hashtag
 
 
 def tweet(sentence):
-    try:
-        sys.stdout.write("{} {}\n".format(len(sentence), sentence))
-        twitter.update_status(status=sentence)
-    except:
-        pass
+    #try:
+    twitter = auth()
+    sys.stdout.write("{} {}\n".format(len(sentence), sentence))
+    twitter.update_status(status=sentence)
+    #except:
+    #    pass
 
 if __name__ == '__main__':
 #    l = task.LoopingCall(main)

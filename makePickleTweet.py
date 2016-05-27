@@ -19,7 +19,7 @@ def countdown():
         print "   " + (formatTime(x)),"time left      \r",
         sys.stdout.flush()
         x -= 1
-    return
+    return pass
 
 def formatTime(x):
     minutes = int(x / 60)

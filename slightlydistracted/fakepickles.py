@@ -40,16 +40,17 @@ def buildTweet():
     sword2 = "NOW"
     while True:
         sword1, sword2 = sword2, random.choice(chain[(sword1, sword2)])
+        print sword2 + "\n"
+        print new_tweet
         if sword2 == "END":
             break
         new_tweet.append(sword2)
-        print new_tweet
     tweet = ' '.join(new_tweet)
     return tweet
 
 def buildPost():
     output = ''
-    while len(output) < 7000:
+    while len(output) < 70:
         output += (' ' + buildTweet())
         print output
     return output

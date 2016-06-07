@@ -9,6 +9,7 @@ from twython import Twython, TwythonError
 import json
 import time
 
+handleTime = datetime.timedelta(minutes=1).seconds
 TIMEOUT = datetime.timedelta(minutes=60).seconds
 
 def countdown():
@@ -45,7 +46,7 @@ def main():
     retweet()
 
 def retweet():
-    words_to_rt = ["#butter", "#flavortown", "#DDD", "#guyfieri", "#foodnetwork", "#porkfat"]
+    words_to_rt = ["#butter", "#flavortown", "#GroceryGames", "#guyfieri", "#foodnetwork", "#porkfat", "cheflife"]
     hashlist = " OR ".join(words_to_rt)
     twitter = auth()
     search_results = twitter.search(q=hashlist, count=10)
@@ -96,7 +97,50 @@ def tweet(sentence):
     except:
         pass
 
+
+def friendshipiscreepy():
+    twitter = auth()
+    targets = twitter.get_direct_messages(count=10)
+    for target in targets:
+        friendID = target['sender_id_str']
+        parsetext = target['text']
+
+
+        try:
+            twitter.create_friendship(user_id=friendID, follow="true")
+            twitter.send_direct_message(user_id=friendID, text=parsetext + "?" + " " + "You think this is a game?")
+        except TwythonError as e:
+            print(e)
+
+def handlementions(lastMentionId=None):
+    twitter = auth()
+    mentions = twitter.get_mentions_timeline(since_id=lastMentionId)
+    if mentions:
+        # Remember the most recent tweet id, which will be the one at index zero.
+        lastMentionId = mentions[0]['id_str']
+        for mention in mentions:
+            who = mention['user']['screen_name']
+            text = mention['text']
+            theId = mention['id_str']
+
+            # we favorite every mention that we see
+            try:
+                twitter.create_favorite(id=theId)
+                # create a reply to them.
+                msg = buildTweet()
+                # In order to post a reply, you need to be sure to include
+                # their username in the body of the tweet.
+                replyMsg = "@{0} {1}".format(who, msg)
+                print replyMsg
+                twitter.update_status(status=replyMsg, in_reply_to_status_id=theId)
+            except TwythonError as e:
+                print e
+
 if __name__ == '__main__':
+    h = task.LoopingCall(handlementions)
+    f = task.LoopingCall(friendshipiscreepy)
+    f.start(handleTime)
+    h.start(handleTime)
     l = task.LoopingCall(main)
     l.start(TIMEOUT)
     reactor.run()

@@ -8,26 +8,10 @@ from twisted.internet import reactor
 from twython import Twython, TwythonError
 import json
 import time
+from textblob import TextBlob
 
 handleTime = datetime.timedelta(minutes=1).seconds
 TIMEOUT = datetime.timedelta(minutes=60).seconds
-
-def countdown():
-    x = TIMEOUT
-    for i in range(x + 1):
-        time.sleep(1)
-        print "   " + (formatTime(x)),"time left      \r",
-        sys.stdout.flush()
-        x -= 1
-#    return pass
-
-def formatTime(x):
-    minutes = int(x / 60)
-    seconds_rem = int(x % 60)
-    if (seconds_rem < 10):
-        return(str(minutes) + ":0" + str(seconds_rem))
-    else:
-        return(str(minutes) + ":" + str(seconds_rem))
 
 def auth():
     with open("access.json", 'r') as f:
@@ -49,7 +33,7 @@ def retweet():
     words_to_rt = ["#butter", "#flavortown", "#GroceryGames", "#guyfieri", "#foodnetwork", "#porkfat", "cheflife"]
     hashlist = " OR ".join(words_to_rt)
     twitter = auth()
-    search_results = twitter.search(q=hashlist, count=10)
+    search_results = twitter.search(q=hashlist, count=5)
     try:
         for tweet in search_results["statuses"]:
             twitter.retweet(id = tweet["id_str"])
@@ -73,11 +57,6 @@ def buildPost():
     output = ''
     while len(output) < 120:
         output += (' ' + buildTweet())
-        output = output.rpartition('.')[0]
-        endingpunc = [".", ".", ".", ".", ".", "!", "?", "?!"]
-        output += random.choice(endingpunc)
-        output = output.lstrip('\"')
-        output = output.lstrip(string.punctuation)
         print output, len(output)
     return output
 
@@ -100,17 +79,28 @@ def tweet(sentence):
 
 def friendshipiscreepy():
     twitter = auth()
-    targets = twitter.get_direct_messages(count=10)
-    for target in targets:
-        friendID = target['sender_id_str']
-        parsetext = target['text']
+    last_sent_id = []
+    lastsent = twitter.get_direct_messages(since_id=last_sent_id)
+    friendId = lastsent[0]['id_str']
+    if friendId in open('twitterdm.log').read():
+        pass
 
-
-        try:
-            twitter.create_friendship(user_id=friendID, follow="true")
-            twitter.send_direct_message(user_id=friendID, text=parsetext + "?" + " " + "You think this is a game?")
-        except TwythonError as e:
-            print(e)
+    else:
+        lf = open('twitterdm.log', 'a+')
+        lf.write(str(friendId) + '\n')
+        print friendId
+        targets = twitter.get_direct_messages(count=1)
+        for target in targets:
+            friendID = target['sender_id_str']
+            #parsetext = target['text']
+            if friendId != friendID:
+                try:
+                    dmtext = buildTweet()
+                    twitter.create_friendship(user_id=friendID, follow="true")
+                    twitter.send_direct_message(user_id=friendID, text=dmtext)
+                except TwythonError as e:
+                    print(e)
+        lf.close()
 
 def handlementions(lastMentionId=None):
     twitter = auth()

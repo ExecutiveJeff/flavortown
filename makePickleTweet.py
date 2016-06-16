@@ -12,14 +12,14 @@ import time
 TIMEOUT = datetime.timedelta(minutes=60).seconds
 
 
-def countdown():
-    x = TIMEOUT
-    for i in range(x + 1):
-        time.sleep(1)
-        print "   " + (formatTime(x)),"time left      \r",
-        sys.stdout.flush()
-        x -= 1
-    return pass
+#def countdown():
+#    x = TIMEOUT
+#    for i in range(x + 1):
+#        time.sleep(1)
+#        print "   " + (formatTime(x)),"time left      \r",
+#        sys.stdout.flush()
+#        x -= 1
+#    return pass
 
 def formatTime(x):
     minutes = int(x / 60)
@@ -42,7 +42,7 @@ def main():
         output = buildPost()
         output += str(' #' + hashtag(output))
     tweet(output)
-    countdown()
+ #   countdown()
 
 
 

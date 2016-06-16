@@ -94,7 +94,7 @@ def hashtag(output):
         "gangsta",
         "cheflife",
         "outofthisworld",
-        "saucy",
+        "DonkeySauce",
         "shutthefrontdoor"]
     hashtag = str(random.choice(keywords))
     print "#" + hashtag
@@ -137,6 +137,36 @@ def friendshipiscreepy():
                     print(e)
         lf.close()
 
+
+def trash(lastMentionId=None):
+    twitter = auth()
+    mentions = twitter.get_mentions_timeline(since_id=lastMentionId)
+    if mentions:
+        # Remember the most recent tweet id, which will be the one at index
+        # zero.
+        lastMentionId = mentions[0]['id_str']
+        for mention in mentions:
+            who = mention['user']['screen_name']
+            text = mention['text']
+            theId = mention['id_str']
+            rlog = open('twitterreply.log', 'a+')
+            # we favorite every mention that we see
+            try:
+                if lastMentionId not in open('twitterreply.log').read():
+                    rlog.write(str(theId) + " " + who + " " + text + '\n')
+                    twitter.create_favorite(id=theId)
+                    # create a reply to them.
+                    msg = buildTweet()
+                    # In order to post a reply, you need to be sure to include
+                    # their username in the body of the tweet.
+                    replyMsg = "@{0} {1}".format(who, msg)
+                    print replyMsg
+                    twitter.update_status(
+                        status=replyMsg, in_reply_to_status_id=theId)
+                else:
+                    print "No new mentions"
+            except TwythonError as e:
+                print e
 
 def handlementions(lastMentionId=None):
     twitter = auth()

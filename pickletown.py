@@ -1,6 +1,6 @@
 import pickle
 
-fh = open("flavordone.txt", "r")
+fh = open("finish.txt", "r")
 
 chain = {}
 

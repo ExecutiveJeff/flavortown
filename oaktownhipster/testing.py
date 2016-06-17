@@ -35,7 +35,7 @@ def main():
 
 def retweet():
     words_to_rt = [
-        "vegan",
+        "#vegan",
         "#oakland",
         "#oaktown",
         "#hipster",
@@ -80,9 +80,9 @@ def randombar():
 
 def buildPost():
     output = ''
-    output += (" " + buildTweet())
-    print output, len(output)
-    output = str(output).upper()
+    while len(output) < 120:
+        output += (' ' + buildTweet())
+        print output, len(output)
     return output
 
 
@@ -91,7 +91,7 @@ def hashtag(output):
         "vegan",
         "craftbeer",
         "local",
-        "warriors",
+        "brunch",
         "oakland",
         "oaktown",
         "godubs",

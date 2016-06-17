@@ -36,7 +36,7 @@ def main():
 
 def retweet():
     words_to_rt = [
-        "vegan",
+        "#vegan",
         "#oakland",
         "#oaktown",
         "#hipster",
@@ -92,7 +92,7 @@ def hashtag(output):
         "vegan",
         "craftbeer",
         "local",
-        "warriors",
+        "brunch",
         "oakland",
         "oaktown",
         "godubs",

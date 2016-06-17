@@ -1,6 +1,6 @@
 #!/bin/bash
 
-grep -E -v '^-' flavortown.txt > flavorprep.txt
-cat flavorprep.txt | sed 's/^/BEGIN NOW /' > flavorprep2.txt
-cat flavorprep2.txt | sed 's/$/ END/' > flavordone.txt
-rm flavorprep.txt && rm flavorprep2.txt
+grep -E -v '^-' $1 > prep.txt
+cat prep.txt | sed 's/^/BEGIN NOW /' > prep2.txt
+cat prep2.txt | sed 's/$/ END/' > finish.txt
+rm prep.txt && rm prep2.txt

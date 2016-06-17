@@ -81,9 +81,9 @@ def randombar():
 
 def buildPost():
     output = ''
-    output += ("heading over to" + " " + randombar() + " " + buildTweet())
-    print output, len(output)
-    output = str(output).upper()
+    while len(output) < 120:
+        output += (' ' + buildTweet())
+        print output, len(output)
     return output
 
 

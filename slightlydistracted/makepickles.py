@@ -4,7 +4,6 @@ import string
 import datetime
 from twisted.internet import task
 from twisted.internet import reactor
-from twython import Twython
 import sys
 import json
 import facebook
@@ -13,26 +12,26 @@ TIMEOUT = datetime.timedelta(minutes=60).seconds
 
 
 def main():
-     cfg = {
-        "page_id"       : "1613323642316370",
-        "access_token"  : "EAAH16iIzzS0BAGJd02Y5t5arGZBe5vugHf37nbpe1Tta6r9lBRImmkVYy3VxNFp51YBMV2zaJzlTZBEFhborz6NIR0JE7dhz3vK1xgzCfq2Nyze6iKNhFlg8ciZAQhy4i3fIFujJXvKIgnLbV7S"
-     }
-     api = get_api(cfg)
-     output = buildPost()
-     print len(output)
+    with open("access.json", 'r') as f:
+        db = json.load(f)
+    cfg = db
+    api = get_api(cfg)
+    output = buildPost()
+    print len(output)
 #     output += str(' #' + hashtag(output))
-     status = api.put_wall_post(output)
+    status = api.put_wall_post(output)
 
 
 def get_api(cfg):
-     graph = facebook.GraphAPI(cfg['access_token'])
-     resp = graph.get_object('me/accounts')
-     page_access_token = None
-     for page in resp['data']:
-         if page ['id'] == cfg['page_id']:
-             page_access_token = page['access_token']
-     graph = facebook.GraphAPI(page_access_token)
-     return graph
+    graph = facebook.GraphAPI(cfg['access_token'])
+    resp = graph.get_object('me/accounts')
+    page_access_token = None
+    for page in resp['data']:
+        if page['id'] == cfg['page_id']:
+            page_access_token = page['access_token']
+    graph = facebook.GraphAPI(page_access_token)
+    return graph
+
 
 def buildTweet():
     chain = pickle.load(open("chain.p", "rb"))
@@ -48,12 +47,14 @@ def buildTweet():
     tweet = ' '.join(new_tweet)
     return tweet
 
+
 def buildPost():
     output = ''
     while len(output) < 350:
         output += (' ' + buildTweet())
         print output
     return output
+
 
 def tweet(sentence):
     try:

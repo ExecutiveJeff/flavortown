@@ -1,6 +1,6 @@
 import pickle
 
-fh = open("brunch.txt", "r")
+fh = open("finish.txt", "r")
 
 chain = {}
 

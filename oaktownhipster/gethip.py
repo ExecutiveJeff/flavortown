@@ -67,15 +67,15 @@ def buildTweet():
     return tweet
 
 
-def randombar():
-    chain = pickle.load(open("bars.p", "rb"))
-    new_tweet = []
-    sword1 = "BEGIN"
-    sword2 = "NOW"
-    sword1, sword2 = sword2, random.choice(chain[(sword1, sword2)])
-    new_tweet.append(sword2)
-    tweet = ' '.join(new_tweet)
-    return tweet
+#def randombar():
+#    chain = pickle.load(open("bars.p", "rb"))
+#    new_tweet = []
+#    sword1 = "BEGIN"
+#    sword2 = "NOW"
+#    sword1, sword2 = sword2, random.choice(chain[(sword1, sword2)])
+#    new_tweet.append(sword2)
+#    tweet = ' '.join(new_tweet)
+#    return tweet
 
 
 def buildPost():

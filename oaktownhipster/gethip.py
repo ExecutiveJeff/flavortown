@@ -204,7 +204,7 @@ if __name__ == '__main__':
  #   t = task.LoopingCall(trash)
     f = task.LoopingCall(friendshipiscreepy)
  #   t.start(handleTime)
-    f.start(handleTime)
+    f.start(friendshiptime)
     h.start(handleTime)
     l = task.LoopingCall(main)
     l.start(TIMEOUT)

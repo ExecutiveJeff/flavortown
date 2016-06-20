@@ -39,13 +39,12 @@ def main():
 
 def retweet():
     words_to_rt = [
-        "#butter",
         "#flavortown",
         "#GroceryGames",
         "#guyfieri",
         "#foodnetwork",
         "#porkfat",
-        "cheflife"]
+        "#cheflife"]
     hashlist = " OR ".join(words_to_rt)
     twitter = auth()
     search_results = twitter.search(q=hashlist, count=5)

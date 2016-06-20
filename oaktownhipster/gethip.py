@@ -40,7 +40,6 @@ def retweet():
         "#oakland",
         "#oaktown",
         "#hipster",
-        "#warriors",
         "#bicycles",
         "#craftbeer",
         "#moustache"]
@@ -95,7 +94,6 @@ def hashtag(output):
         "brunch",
         "oakland",
         "oaktown",
-        "godubs",
         "rideordie",
         "grassroots",
         "bro",

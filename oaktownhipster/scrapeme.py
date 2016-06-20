@@ -5,7 +5,7 @@ from lxml.html import fromstring
 import sys
 import time
 
-urlprefix = "http://stuffhipsterssay.tumblr.com/"
+urlprefix = "http://www.yelp.com/biz/the-night-light-oakland?osq=hipster+bars"
 
 # 709
 for page in xrange(1, 10):
@@ -15,7 +15,7 @@ for page in xrange(1, 10):
         response = urllib2.urlopen(urlprefix + str(page))
         html = response.read()
         dom = fromstring(html)
-        sels = dom.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "post", " " )) and (((count(preceding-sibling::*) + 1) = 2) and parent::*)]//*[contains(concat( " ", @class, " " ), concat( " ", "short", " " ))] | //*[contains(concat( " ", @class, " " ), concat( " ", "post", " " )) and (((count(preceding-sibling::*) + 1) = 1) and parent::*)]//*[contains(concat( " ", @class, " " ), concat( " ", "short", " " ))]')
+        sels = dom.xpath('//li[(((count(preceding-sibling::*) + 1) = 5) and parent::*)]//p | //li[(((count(preceding-sibling::*) + 1) = 4) and parent::*)]//p | //*+[contains(concat( " ", @class, " " ), concat( " ", "clearfix", " " ))]//p')
         for review in sels:
             if review.text:
                 print review.text.rstrip()

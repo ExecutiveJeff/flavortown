@@ -1,10 +1,8 @@
 import pickle
 import random
-import string
 import datetime
 from twisted.internet import task
 from twisted.internet import reactor
-import sys
 import json
 import facebook
 
@@ -54,14 +52,6 @@ def buildPost():
         output += (' ' + buildTweet())
         print output
     return output
-
-
-def tweet(sentence):
-    try:
-        sys.stdout.write("{} {}\n".format(len(sentence), sentence))
-        twitter.update_status(status=sentence)
-    except:
-        pass
 
 if __name__ == '__main__':
     l = task.LoopingCall(main)

@@ -25,11 +25,12 @@ def auth():
 
 
 def main():
-    output = buildPost()
+    output = buildTweet()
     output += str(' #' + hashtag(output))
     while len(output) > 140:
-        output = buildPost()
+        output = buildTweet()
         output += str(' #' + hashtag(output))
+
     print output
 
 

@@ -36,12 +36,9 @@ def main():
 
 def retweet():
     words_to_rt = [
-        "#oakland",
-        "#oaktown",
-        "#hipster",
-        "#bicycles",
+        "#organic",
         "#craftbeer",
-        "#moustache"]
+        "#brunch"]
     hashlist = " OR ".join(words_to_rt)
     twitter = auth()
     s = str(random.choice(words_to_rt))
@@ -88,17 +85,15 @@ def buildPost():
 
 def hashtag(output):
     keywords = [
-        "vegan",
+        "organic",
         "craftbeer",
         "local",
         "brunch",
-        "oakland",
-        "oaktown",
-        "rideordie",
+        "eggsfordays",
         "grassroots",
         "bro",
         "hella",
-        "thuglyfe",
+        "brunchlife",
         "dogpark",
         "afterhours",
         "getlitfam",

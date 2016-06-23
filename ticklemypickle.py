@@ -45,9 +45,9 @@ def retweet():
         "#foodnetwork",
         "#porkfat",
         "#cheflife"]
-    hashlist = " OR ".join(words_to_rt)
     twitter = auth()
-    search_results = twitter.search(q=hashlist, count=5)
+    s = str(random.choice(words_to_rt))
+    search_results = twitter.search(q=s, count=5)
     try:
         for tweet in search_results["statuses"]:
             twitter.retweet(id=tweet["id_str"])

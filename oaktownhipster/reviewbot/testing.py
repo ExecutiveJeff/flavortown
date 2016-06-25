@@ -1,8 +1,5 @@
 import pickle
 import random
-import sys
-import ginger
-from ginger import get_ginger_result
 
 
 def main():
@@ -21,7 +18,6 @@ def buildTweet():
             break
         new_tweet.append(sword2)
     tweet = ' '.join(new_tweet)
-    tweet = str(get_ginger_result(tweet))
     tweet = tweet + '\n'
     return tweet
 

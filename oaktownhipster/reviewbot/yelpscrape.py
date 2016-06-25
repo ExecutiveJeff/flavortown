@@ -7,7 +7,7 @@ filename = raw_input("Please enter a name for the output: ")
 queries = 0
 while queries <201:
 	stringQ = str(queries)
-	page = urlopen('http://www.yelp.com/biz/' + place + '-oakland?start=' + stringQ)
+	page = urlopen('http://www.yelp.com/biz/' + place + '?start=' + stringQ)
 
 	soup = BeautifulSoup(page, 'lxml')
 	reviews = soup.findAll('p', attrs={'itemprop':'description'})

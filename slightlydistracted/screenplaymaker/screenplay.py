@@ -2,6 +2,9 @@ import pickle
 import random
 import string
 
+
+line_length = raw_input("What is the largest number of characters per dialogue? ")
+line_length = int(line_length)
 def main():
     screen_play()
 
@@ -15,6 +18,7 @@ def names():
     name = name.strip()
     return name
 
+
 def location():
     locs = open('locations.txt', 'r')
     loc = []
@@ -24,6 +28,7 @@ def location():
     location = location.strip()
     return location
 
+
 def deets():
     details = open('details.txt', 'r')
     dee = []
@@ -32,6 +37,7 @@ def deets():
     deet = random.choice(dee)
     deet = deet.strip()
     return deet
+
 
 def build_line():
     chain = pickle.load(open("chain.p", "rb"))
@@ -77,7 +83,7 @@ def name_swap(line):
 
 def build_diag():
     output = ''
-    length = random.randrange(1,200)
+    length = random.randrange(1, line_length)
     while len(output) < length:
         output += (' ' + build_line())
     return output
@@ -86,6 +92,7 @@ def screen_play():
     title = build_line()
     title = title.upper()
     print name_swap(title)
+    print deets()
     print location().upper()
     name1 = names().upper()
     name2 = names().upper()

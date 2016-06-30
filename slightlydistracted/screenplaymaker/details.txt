@@ -1,8 +1,0 @@
-EXT. night
-INT. mid day
-EXT. mid day
-INT. night
-EXT. day
-INT. day
-EXT. morning
-INT. morning

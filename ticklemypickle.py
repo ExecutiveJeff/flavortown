@@ -1,14 +1,12 @@
 import pickle
 import random
-import string
 import datetime
 import sys
 from twisted.internet import task
 from twisted.internet import reactor
 from twython import Twython, TwythonError
 import json
-import time
-from textblob import TextBlob
+
 
 friendshiptime = datetime.timedelta(minutes=1).seconds
 handleTime = datetime.timedelta(minutes=30).seconds
@@ -33,7 +31,6 @@ def main():
         output = buildPost()
         output += str(' #' + hashtag(output))
     tweet(output)
-#    countdown()
     retweet()
 
 
@@ -126,7 +123,6 @@ def friendshipiscreepy():
         targets = twitter.get_direct_messages(count=1)
         for target in targets:
             friendID = target['sender_id_str']
-            #parsetext = target['text']
             if friendId != friendID:
                 try:
                     dmtext = buildTweet()
@@ -163,23 +159,19 @@ def handlementions(lastMentionId=None):
     twitter = auth()
     mentions = twitter.get_mentions_timeline(since_id=lastMentionId)
     if mentions:
-        # Remember the most recent tweet id, which will be the one at index
-        # zero.
         lastMentionId = mentions[0]['id_str']
         for mention in mentions:
             who = mention['user']['screen_name']
             text = mention['text']
             theId = mention['id_str']
             rlog = open('twitterreply.log', 'a+')
-            # we favorite every mention that we see
+            #favorite every mention
             try:
                 if lastMentionId not in open('twitterreply.log').read():
                     rlog.write(str(theId) + " " + who + " " + text + '\n')
                     twitter.create_favorite(id=theId)
                     # create a reply to them.
                     msg = buildTweet()
-                    # In order to post a reply, you need to be sure to include
-                    # their username in the body of the tweet.
                     replyMsg = "@{0} {1}".format(who, msg)
                     print replyMsg
                     twitter.update_status(
@@ -192,9 +184,7 @@ def handlementions(lastMentionId=None):
 
 if __name__ == '__main__':
     h = task.LoopingCall(handlementions)
-#    t = task.LoopingCall(trash)
     f = task.LoopingCall(friendshipiscreepy)
-#    t.start(handleTime)
     f.start(friendshiptime)
     h.start(handleTime)
     l = task.LoopingCall(main)
